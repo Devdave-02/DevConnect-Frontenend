@@ -1,11 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import api from "@/lib/api";
-import ProjectCard from "../components/projectCard";
 import { useAuth } from "@/context/AuthContext";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
-import { Trash2 } from "lucide-react"; // for delete icon
+import { Trash2 } from "lucide-react"; 
 
 interface Author {
   _id: string;
@@ -150,3 +149,4 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
+
