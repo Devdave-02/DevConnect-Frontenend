@@ -1,9 +1,11 @@
 "use client";
 
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import api from "@/lib/api"; // axios instance (baseURL: your backend)
+import api from "@/lib/api"; 
 import Link from "next/link";
+import { Eye, EyeOff } from  "lucide-react";
 
 
 interface SignupFormInputs {
@@ -14,6 +16,7 @@ interface SignupFormInputs {
 
 const SignUp = () => {
   const { register, handleSubmit, formState: { errors }, } = useForm<SignupFormInputs>();
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const onSubmit: SubmitHandler<SignupFormInputs> = async (data) => {
@@ -53,15 +56,20 @@ const SignUp = () => {
             )}
           </div>
 
-          <div>
-            <input {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters", },})} type="password" placeholder="Password" className="border-1 border-black-900 text-black p-2 w-full rounded" />
-            {errors.password && (
-            <p className="text-sm mt-1">
-            {errors.password.message}
-            </p>
-            )}
-          </div>
+         <div className="relative mb-4">
+          <input {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters long", } })} type={showPassword ? "text" : "password"} placeholder="Password" className="border-1 border-black-900 text-black p-2 w-full mb-4 rounded pr-10"/>
 
+        {/*Eye Icon Toggle */}
+        <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-2.5 text-gray-500 hover:text-gray-700" >
+        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+        </button>
+
+        {errors.password && (
+        <p className="text-sm mt-1">
+        {errors.password.message}
+        </p>
+            )}
+        </div>
 
           <button
             type="submit"
